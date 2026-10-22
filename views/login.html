@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Đăng nhập – Tra cứu Laptop Yến Nhi</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <style>
+    :root { --brand: #1a56db; --brand-dark: #1640a8; --red: #e30019; --line: #e5e7eb; --muted: #6b7280; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px;
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; color: #111827;
+      background: linear-gradient(135deg, #0b2a6f, #1a56db);
+    }
+    form { background: #fff; width: min(360px, 100%); padding: 32px 28px; border-radius: 16px; box-shadow: 0 20px 50px rgba(0, 0, 0, .25); display: grid; gap: 14px; }
+    .logo { display: flex; align-items: center; gap: 10px; justify-content: center; font-weight: 800; font-size: 19px; margin-bottom: 4px; }
+    .logo span { width: 40px; height: 40px; border-radius: 10px; background: var(--brand); display: grid; place-items: center; }
+    p { margin: 0 0 6px; text-align: center; color: var(--muted); font-size: 14px; }
+    input { font: inherit; font-size: 16px; padding: 12px 14px; border: 1.5px solid var(--line); border-radius: 10px; width: 100%; }
+    input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px #e8effd; }
+    button { font: inherit; font-weight: 700; font-size: 16px; padding: 12px; border: 0; border-radius: 10px; background: var(--brand); color: #fff; cursor: pointer; }
+    button:hover { background: var(--brand-dark); }
+    button:disabled { opacity: .6; cursor: wait; }
+    .err { color: var(--red); font-size: 14px; min-height: 1.2em; margin: 0; text-align: center; }
+  </style>
+</head>
+<body>
+  <form id="login">
+    <div class="logo">
+      <span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg></span>
+      Laptop Yến Nhi
+    </div>
+    <p>Tra cứu cấu hình &amp; giá máy</p>
+    <input type="password" name="password" placeholder="Mật khẩu" required autofocus autocomplete="current-password">
+    <button>Đăng nhập</button>
+    <p class="err" id="err" role="alert"></p>
+  </form>
+  <script>
+    document.getElementById('login').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.disabled = true;
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: e.target.password.value }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+        location.reload();
+      } catch (err) {
+        document.getElementById('err').textContent = err.message || 'Không đăng nhập được.';
+        btn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

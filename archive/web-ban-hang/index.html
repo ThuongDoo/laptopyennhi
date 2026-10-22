@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Laptop Yến Nhi – Laptop cũ chất lượng, giá tốt</title>
+  <meta name="description" content="Laptop Yến Nhi chuyên laptop cũ chất lượng: Dell, ThinkPad, HP, MacBook, Asus... Bảo hành tận tâm, test máy thoải mái trước khi mua.">
+  <meta property="og:title" content="Laptop Yến Nhi – Laptop cũ chất lượng, giá tốt">
+  <meta property="og:description" content="Laptop cũ đã kiểm tra kỹ, bảo hành tận tâm, test máy thoải mái trước khi mua.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main>
+    <!-- Banner -->
+    <section class="container hero">
+      <aside class="hero-cats" id="hero-cats" aria-label="Danh mục"></aside>
+      <div class="slider" id="slider">
+        <div class="slides" id="slides"></div>
+        <button class="slider-btn prev" aria-label="Trước"></button>
+        <button class="slider-btn next" aria-label="Sau"></button>
+        <div class="slider-dots" id="dots"></div>
+      </div>
+      <div class="hero-side" id="hero-side"></div>
+    </section>
+
+    <!-- Cam kết -->
+    <section class="container perks" id="perks"></section>
+
+    <!-- Nổi bật -->
+    <section class="container block" id="featured-block" hidden>
+      <div class="block-head">
+        <h2><span class="flash">★</span> Máy nổi bật</h2>
+        <a href="#san-pham">Xem tất cả</a>
+      </div>
+      <div class="row-scroll" id="featured"></div>
+    </section>
+
+    <!-- Thương hiệu -->
+    <section class="container block brands-block">
+      <div class="block-head"><h2>Thương hiệu</h2></div>
+      <div class="brands" id="brands"></div>
+    </section>
+
+    <!-- Danh sách -->
+    <section class="container listing" id="san-pham">
+      <div class="filter-overlay" id="filter-overlay"></div>
+      <aside class="filters" id="filters" aria-label="Bộ lọc"></aside>
+      <div class="listing-main">
+        <div class="listing-head">
+          <h2 id="listing-title">Tất cả laptop</h2>
+          <span class="muted" id="result-count"></span>
+        </div>
+        <div class="sortbar">
+          <button class="filter-toggle" id="filter-toggle"></button>
+          <span class="sort-label">Sắp xếp:</span>
+          <button data-sort="featured">Nổi bật</button>
+          <button data-sort="asc">Giá thấp – cao</button>
+          <button data-sort="desc">Giá cao – thấp</button>
+          <button data-sort="new">Mới về</button>
+        </div>
+        <div class="active-filters" id="active-filters"></div>
+        <div class="pgrid" id="grid"></div>
+        <div class="empty" id="empty" hidden>
+          <p><b>Chưa có máy phù hợp.</b> Bạn nhắn Zalo, shop tìm máy đúng nhu cầu giúp bạn nhé!</p>
+          <button class="btn btn-outline" id="empty-reset">Xoá bộ lọc</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="/common.js"></script>
+  <script src="/home.js"></script>
+</body>
+</html>

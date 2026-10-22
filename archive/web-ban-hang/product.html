@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:image" content="{{image}}">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body class="page-product">
+  <div id="site-header"></div>
+
+  <main class="container" id="pdp">
+    <div class="pdp-loading">Đang tải...</div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <dialog id="order-dialog" class="dialog dialog-sm">
+    <button class="dialog-close" type="button" aria-label="Đóng">×</button>
+    <form id="order-form" class="order-form">
+      <h2 id="order-title">Đặt giữ máy</h2>
+      <div class="order-product" id="order-product"></div>
+      <p class="muted">Để lại thông tin, shop sẽ gọi lại cho bạn trong thời gian sớm nhất.</p>
+      <label>Họ và tên *<input name="name" required maxlength="100" autocomplete="name"></label>
+      <label>Số điện thoại *<input name="phone" type="tel" required maxlength="15" autocomplete="tel"></label>
+      <label>Ghi chú<textarea name="note" rows="3" maxlength="1000" placeholder="Giờ có thể nghe máy, câu hỏi thêm về máy..."></textarea></label>
+      <button class="btn btn-red btn-lg btn-block" type="submit">Gửi yêu cầu</button>
+      <p class="form-msg" role="status"></p>
+    </form>
+  </dialog>
+
+  <script src="/common.js"></script>
+  <script src="/product.js"></script>
+</body>
+</html>

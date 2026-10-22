@@ -1,0 +1,14 @@
+{
+  "name": "laptop-yen-nhi",
+  "version": "1.0.0",
+  "description": "Website bán laptop cũ - Laptop Yến Nhi",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "multer": "^2.0.2"
+  }
+}

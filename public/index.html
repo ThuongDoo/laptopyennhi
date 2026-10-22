@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Tra cứu máy – Laptop Yến Nhi</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/lookup.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="/" class="tb-logo" aria-label="Tra cứu">
+        <span class="logo-mark" id="logo-icon"></span>
+        <span class="tb-title">Tra cứu máy<small id="shop-name">Laptop Yến Nhi</small></span>
+      </a>
+      <label class="search">
+        <span class="search-icon" id="search-icon"></span>
+        <input type="search" id="q" placeholder="Gõ tên máy, CPU, card... vd: 3561, i7 16gb, t600" autocomplete="off" autofocus>
+        <kbd title="Bấm / để tìm nhanh">/</kbd>
+      </label>
+      <nav class="tb-nav">
+        <a href="/admin" class="tb-btn" id="nav-admin"></a>
+        <button class="tb-btn" id="logout" title="Đăng xuất"></button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="filters">
+    <div class="container">
+      <div class="brand-chips" id="brand-chips" role="group" aria-label="Lọc theo hãng"></div>
+      <div class="filter-row">
+        <select id="f-cat" aria-label="Nhu cầu"></select>
+        <select id="f-price" aria-label="Khoảng giá"></select>
+        <select id="f-ram" aria-label="RAM"></select>
+        <select id="f-sort" aria-label="Sắp xếp">
+          <option value="new">Mới thêm trước</option>
+          <option value="asc">Giá thấp → cao</option>
+          <option value="desc">Giá cao → thấp</option>
+          <option value="name">Theo tên A → Z</option>
+        </select>
+        <label class="toggle"><input type="checkbox" id="f-all"> <span>Hiện cả máy hết hàng / ngừng bán</span></label>
+        <span class="result-count" id="count"></span>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="results" id="results"></div>
+    <div class="empty" id="empty" hidden></div>
+  </main>
+
+  <!-- Chi tiết máy -->
+  <dialog id="detail" class="drawer" aria-labelledby="d-name">
+    <div class="drawer-inner" id="detail-body"></div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/lookup.js"></script>
+</body>
+</html>

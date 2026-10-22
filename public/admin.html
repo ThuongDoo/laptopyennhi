@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Quản lý máy – Laptop Yến Nhi</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/admin.css">
+</head>
+<body class="admin">
+  <!-- Trang quản lý -->
+  <div id="app-view">
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="/" class="logo"><span class="logo-mark">YN</span><span class="logo-text">Quản lý máy</span></a>
+        <nav class="tabs">
+          <button data-tab="products" class="active">💻 Máy</button>
+          <button data-tab="suppliers">🏭 Nhà cung cấp</button>
+          <button data-tab="settings">⚙️ Cài đặt</button>
+        </nav>
+        <a href="/" class="btn btn-primary btn-sm" id="to-lookup">🔍 Tra cứu</a>
+        <button id="logout" class="btn btn-ghost btn-sm">Đăng xuất</button>
+      </div>
+    </header>
+
+    <main class="container admin-main">
+      <!-- Sản phẩm -->
+      <section data-panel="products">
+        <div class="toolbar">
+          <div class="stats" id="stats"></div>
+          <input type="search" id="p-search" placeholder="Tìm tên máy, số serial, nhà cung cấp...">
+          <select id="p-supplier" aria-label="Lọc theo nhà cung cấp"></select>
+          <button class="btn btn-primary" id="add-product">+ Thêm máy</button>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th>Máy</th><th>Giá bán</th><th>Nhập hàng</th><th>Trạng thái</th><th></th></tr></thead>
+            <tbody id="product-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Nhà cung cấp -->
+      <section data-panel="suppliers" hidden>
+        <div class="toolbar">
+          <p class="muted toolbar-note">Danh sách nơi bạn lấy máy. Khi thêm máy, chọn nhà cung cấp để sau này tra bảo hành.</p>
+          <button class="btn btn-primary" id="add-supplier">+ Thêm nhà cung cấp</button>
+        </div>
+        <div id="supplier-list" class="supplier-list"></div>
+      </section>
+
+      <!-- Cài đặt -->
+      <section data-panel="settings" hidden>
+        <div class="settings-grid">
+          <form id="settings-form" class="panel">
+            <h2>Thông tin ghép vào tin nhắn gửi khách</h2>
+            <label>Tên shop<input name="shopName"></label>
+            <label>Số điện thoại<input name="phone"></label>
+            <label>Số Zalo<input name="zalo"></label>
+            <label>Địa chỉ<input name="address"></label>
+            <label>Giờ mở cửa<input name="openHours"></label>
+            <label>Ưu đãi khi mua máy (mỗi dòng 1 ưu đãi)
+              <textarea name="gifts" rows="4" placeholder="Tặng balo&#10;Tặng chuột không dây"></textarea>
+              <small class="muted">Thêm vào tin nhắn khi bật "Kèm ưu đãi" ở trang Tra cứu. Để trống nếu không dùng.</small>
+            </label>
+            <button class="btn btn-primary">Lưu thông tin</button>
+            <p class="form-msg"></p>
+          </form>
+          <form id="password-form" class="panel">
+            <h2>Đổi mật khẩu</h2>
+            <label>Mật khẩu hiện tại<input type="password" name="current" required></label>
+            <label>Mật khẩu mới<input type="password" name="next" required minlength="6"></label>
+            <button class="btn btn-primary">Đổi mật khẩu</button>
+            <p class="form-msg"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Form thêm/sửa máy -->
+  <dialog id="product-dialog" class="dialog">
+    <button class="dialog-close" type="button" aria-label="Đóng">×</button>
+    <form id="product-form" class="product-form">
+      <h2 id="form-title">Thêm máy</h2>
+      <div class="form-grid">
+        <label class="span-2">Tên máy *<input name="name" required placeholder="vd: Dell Latitude 7490"></label>
+        <label>Hãng<input name="brand" list="brands" placeholder="Dell, HP, Lenovo..."></label>
+        <label>Nhu cầu (danh mục)
+          <select name="category">
+            <option value="van-phong">Văn phòng – Học tập</option>
+            <option value="gaming">Laptop Gaming</option>
+            <option value="do-hoa">Đồ hoạ – Kỹ thuật</option>
+            <option value="mong-nhe">Mỏng nhẹ – Doanh nhân</option>
+            <option value="macbook">MacBook</option>
+          </select>
+        </label>
+        <label>Giá bán (đ)<input name="price" inputmode="numeric" placeholder="vd: 6500000 — để trống nếu chưa có giá"></label>
+        <label>Trạng thái
+          <select name="status">
+            <option value="available">Còn hàng</option>
+            <option value="sold">Hết hàng</option>
+            <option value="hidden">Ngừng bán</option>
+          </select>
+        </label>
+        <label>CPU<input name="cpu" placeholder="vd: Core i5-8350U"></label>
+        <label>RAM<input name="ram" placeholder="vd: 8GB"></label>
+        <label>Ổ cứng<input name="storage" placeholder="vd: SSD 256GB"></label>
+        <label>Màn hình<input name="screen" placeholder='vd: 14" Full HD'></label>
+        <label>Card đồ hoạ<input name="gpu" placeholder="vd: Intel UHD 620"></label>
+        <label>Tình trạng<input name="condition" placeholder="vd: Đẹp 98%"></label>
+        <label>Bảo hành<input name="warranty" placeholder="vd: 6 tháng"></label>
+        <fieldset class="span-2 import-box">
+          <legend>⚙️ Tuỳ chọn nâng cấp <small>(không bắt buộc: chọn ở trang Tra cứu, giá tự cộng thêm)</small></legend>
+          <div class="opt-editors">
+            <div class="opt-editor">
+              <div class="opt-editor-head"><b>RAM</b><span class="muted">Gốc: <span data-base="ram">—</span> (+0đ)</span></div>
+              <div class="opt-rows" data-rows="ram"></div>
+              <button type="button" class="btn btn-ghost btn-sm" data-add-opt="ram">+ Thêm mức RAM</button>
+            </div>
+            <div class="opt-editor">
+              <div class="opt-editor-head"><b>Ổ cứng</b><span class="muted">Gốc: <span data-base="storage">—</span> (+0đ)</span></div>
+              <div class="opt-rows" data-rows="storage"></div>
+              <button type="button" class="btn btn-ghost btn-sm" data-add-opt="storage">+ Thêm mức ổ cứng</button>
+            </div>
+          </div>
+          <p class="muted import-hint">Cấu hình gốc là RAM / Ổ cứng nhập ở trên. Mỗi dòng là một mức nâng cấp và số tiền cộng thêm so với giá bán.</p>
+        </fieldset>
+        <label class="span-2">Mô tả<textarea name="description" rows="8" placeholder="Câu giới thiệu ngắn về máy&#10;## Điểm nổi bật&#10;- Ý thứ nhất&#10;- Ý thứ hai"></textarea>
+          <small class="muted">Mẹo trình bày: dòng bắt đầu bằng <b>## </b> là tiêu đề nhỏ, dòng bắt đầu bằng <b>- </b> là gạch đầu dòng.</small>
+        </label>
+        <label class="span-2">Link bài đăng quảng cáo (mỗi dòng 1 link)
+          <textarea name="postLinks" rows="3" placeholder="https://www.facebook.com/...&#10;https://www.chotot.com/..."></textarea>
+          <small class="muted">Dán link các bài đăng của máy này trên Facebook, Zalo, Chợ Tốt... để mở nhanh từ trang Tra cứu.</small>
+        </label>
+
+        <fieldset class="span-2 import-box">
+          <legend>🔒 Thông tin nhập hàng <small>(nội bộ, không đưa vào tin gửi khách)</small></legend>
+          <div class="form-grid">
+            <label>Nhà cung cấp
+              <span class="select-row">
+                <select name="supplierId" id="supplier-select"></select>
+                <button type="button" class="btn btn-ghost btn-sm" id="quick-supplier" title="Thêm nhà cung cấp mới">+ Mới</button>
+              </span>
+            </label>
+            <label>Ngày nhập<input type="date" name="importDate"></label>
+            <label>Số serial / Service Tag<input name="serial" placeholder="vd: 5CG8341XYZ"></label>
+            <label>Bảo hành từ nhà cung cấp (tháng)<input name="supplierWarranty" inputmode="numeric" placeholder="vd: 3"></label>
+          </div>
+          <p class="muted import-hint" id="warranty-hint"></p>
+        </fieldset>
+
+        <div class="span-2">
+          <span class="label">Ảnh (ảnh đầu tiên là ảnh đại diện)</span>
+          <div class="image-list" id="image-list"></div>
+          <input type="file" id="image-input" accept="image/*" multiple>
+        </div>
+      </div>
+      <datalist id="brands"><option>Dell</option><option>HP</option><option>Lenovo</option><option>Apple</option><option>Asus</option><option>Acer</option><option>MSI</option></datalist>
+      <div class="form-actions">
+        <p class="form-msg err"></p>
+        <button type="button" class="btn btn-ghost" id="cancel-form">Huỷ</button>
+        <button class="btn btn-primary" id="save-product">Lưu</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Form nhà cung cấp -->
+  <dialog id="supplier-dialog" class="dialog dialog-sm">
+    <button class="dialog-close" type="button" aria-label="Đóng">×</button>
+    <form id="supplier-form" class="product-form">
+      <h2 id="supplier-title">Thêm nhà cung cấp</h2>
+      <div class="form-grid one-col">
+        <label>Tên nhà cung cấp *<input name="name" required maxlength="150" placeholder="vd: Kho laptop Minh Phát"></label>
+        <label>Số điện thoại / Zalo<input name="phone" maxlength="30"></label>
+        <label>Địa chỉ<input name="address" maxlength="300"></label>
+        <label>Ghi chú<textarea name="note" rows="3" maxlength="1000" placeholder="Điều kiện bảo hành, người liên hệ, số tài khoản..."></textarea></label>
+      </div>
+      <div class="form-actions">
+        <p class="form-msg err"></p>
+        <button type="button" class="btn btn-ghost" data-close>Huỷ</button>
+        <button class="btn btn-primary">Lưu</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="/admin.js"></script>
+</body>
+</html>
